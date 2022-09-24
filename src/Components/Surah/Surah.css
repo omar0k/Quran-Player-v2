@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap');
+
+:root {
+    --secondary-color: #202326
+}
+
+.surah {
+    color: rgb(230, 229, 229);
+    font-size: 25px;
+    width: 1fr;
+    font-family: "Cairo", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    background-color: blue;
+    background-color: #31363c;
+    border-radius: 10px;
+    padding: 10px 10px;
+}
