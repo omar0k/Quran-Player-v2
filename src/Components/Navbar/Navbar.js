@@ -1,37 +1,64 @@
 import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
+import Switch from "@mui/material/Switch";
 import "./Navbar.css";
-function Navbar() {
-  const [sidebar, setSideBar] = useState(false);
+import { FormControlLabel, FormGroup } from "@mui/material";
+
+function Navbar({ changeID, chapters, chapID }) {
+  const [sideBar, setSideBar] = useState(false);
   const showSideBar = () => {
-    setSideBar(!sidebar);
+    setSideBar(!sideBar);
+  };
+  const handleChange = (e) => {
+    changeID(e.target.value);
   };
   return (
     <>
       <div className="navbar">
         <FaBars id="bars" onClick={showSideBar} />
       </div>
-      <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+      <nav className={sideBar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items">
           <li className="navbar-toggle">
             <AiOutlineClose id="close" onClick={showSideBar} />
           </li>
-          <form action="">
+          <FormGroup>
+            <select id="surah-dropdown" onChange={handleChange}>
+              {chapters.map((chapter, index) => {
+                return (
+                  <option key={index} value={index}>
+                    {chapter.name_simple}
+                  </option>
+                );
+              })}
+            </select>
             <label>
               Start Verse:
-              <input type="number" name="start-verse" />
+              <input
+                type="number"
+                name="start-verse"
+                min={0}
+                max={chapters[chapID] ? chapters[chapID].verses_count - 1 : 1}
+              />
             </label>
             <label>
               End Verse:
-              <input type="number" name="end-verse" />
+              <input
+                type="number"
+                name="end-verse"
+                min={1}
+                max={chapters[chapID] ? chapters[chapID].verses_count : 1}
+              />
             </label>
             <label>
               Repeat Verse:
-              <input type="number" name="repetition" />
+              <input type="number" name="repetition" min={1} max={100} />
             </label>
-            <label>Loop Selection</label>
-          </form>
+            <FormControlLabel label="Label" control={<Switch />} />
+            <label>Pause between Verses (seconds)</label>
+            <input type="number" min={0} max={10} />
+          </FormGroup>
         </ul>
       </nav>
     </>

@@ -1,7 +1,7 @@
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import "./Player.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 const Player = ({ reciationsURLS, ayahState, ayahText }) => {
   let AyahIndex = ayahState[0];
   let setAyahIndex = ayahState[1];
@@ -21,10 +21,17 @@ const Player = ({ reciationsURLS, ayahState, ayahText }) => {
       setAyahIndex(AyahIndex - 1);
     }
   };
+  const player = useRef();
+  const audioFunction = () => {
+    player.current.audio.current.play();
+  };
   return (
     <>
+      <div id="mydiv" onClick={audioFunction}>
+        hello
+      </div>
       <AudioPlayer
-      
+        ref={player}
         header={ayahVerse[AyahIndex]}
         className="audio-player"
         customAdditionalControls={[]}
