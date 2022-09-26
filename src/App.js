@@ -7,6 +7,7 @@ const baseUrl = "https://api.quran.com/api/v4/";
 const audioUrl = "https://verses.quran.com/";
 
 function App() {
+  const [showSurah, setShowSurah] = useState(false);
   const [AyahIndex, setAyahIndex] = useState(0);
   const [chapters, setChapters] = useState([]);
   const [verses, setVerses] = useState([]);
@@ -30,7 +31,6 @@ function App() {
   useEffect(() => {
     console.log("useeff", chapterID);
     loadSurah();
-
   }, [chapterID]);
   const loadSurah = () => {
     let reciationsUrls = [];
@@ -60,15 +60,12 @@ function App() {
   };
   return (
     <>
-      <Navbar
-        changeID={setChapterID}
-        chapters={chapters}
-        chapID={chapterID}
-      />
+      <Navbar changeID={setChapterID} chapters={chapters} chapID={chapterID} />
       <section className="surahs">
         {chapters.map((chapter, index) => {
           return (
             <Surah
+              surahText={verses}
               key={index}
               {...chapter}
               changeID={setChapterID}
