@@ -1,8 +1,7 @@
 import React from "react";
 import { Stack } from "@mui/material";
-import { AiOutlineClose } from "react-icons/ai";
 import "./SurahText.css";
-const SurahText = ({ ayahText, openModal, setOpenModal }) => {
+const SurahText = ({ ayahText}) => {
   return (
     <Stack className="ayah-stack">
       {ayahText.map((ayah, index) => {
