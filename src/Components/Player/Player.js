@@ -18,7 +18,7 @@ const Player = ({ reciationsURLS, ayahState, ayahText }) => {
   };
   const decrementAyahIndex = () => {
     if (AyahIndex - 1 >= 0) {
-      setAyahIndex(AyahIndex - 1);
+      setAyahIndex(AyahIndex - 1);  
     }
   };
   const player = useRef();
@@ -27,9 +27,6 @@ const Player = ({ reciationsURLS, ayahState, ayahText }) => {
   };
   return (
     <>
-      <div id="mydiv" onClick={audioFunction}>
-        hello
-      </div>
       <AudioPlayer
         ref={player}
         header={ayahVerse[AyahIndex]}

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Surah from "./Components/Surah/Surah";
 import "./App.css";
+import Modal from "./Components/Modal/Modal";
 import Player from "./Components/Player/Player";
 import Navbar from "./Components/Navbar/Navbar";
 const baseUrl = "https://api.quran.com/api/v4/";
 const audioUrl = "https://verses.quran.com/";
 
 function App() {
-  const [showSurah, setShowSurah] = useState(false);
+  const [Reciters, setReciters] = useState([]);
+  const [CurrentReciter, setCurrentReciter] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
   const [AyahIndex, setAyahIndex] = useState(0);
   const [chapters, setChapters] = useState([]);
   const [verses, setVerses] = useState([]);
@@ -20,19 +23,32 @@ function App() {
         setChapters(data.chapters);
       });
   }, []);
-  useEffect(() => {
-    fetch(`${baseUrl}/verses/by_chapter/1`)
-      .then((response) => response.json())
-      .then((data) => {
-        setVerses(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${baseUrl}/verses/by_chapter/1`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setVerses(data);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    console.log("useeff", chapterID);
-    loadSurah();
-  }, [chapterID]);
-  const loadSurah = () => {
+    if (openModal) {
+      document.body.style.overflow = "hidden";
+      document.getElementsByClassName("audio-player")[0].style.fontSize = "0";
+    } else {
+      document.body.style.overflow = "auto";
+      document.getElementsByClassName("audio-player")[0].style.fontSize =
+        "30px";
+    }
+  }, [openModal]);
+  useEffect(() => {
+    fetch(`${baseUrl}resources/chapter_reciters?language=en`).then(
+      (response) => {
+        response.json().then((data) => setReciters(data.reciters));
+      }
+    );
+  }, []);
+  useEffect(() => {
     let reciationsUrls = [];
     let AyahsAudio = [];
     let textVerses = [];
@@ -42,9 +58,9 @@ function App() {
       fetch(
         `${baseUrl}/quran/verses/uthmani?chapter_number=${chapterID}}`
       ).then((response) => response.json()),
-      fetch(`${baseUrl}/quran/recitations/3/?chapter_number=${chapterID}`).then(
-        (response) => response.json()
-      ),
+      fetch(
+        `${baseUrl}/quran/recitations/${CurrentReciter}/?chapter_number=${chapterID}`
+      ).then((response) => response.json()),
     ]).then((data) => {
       reciationsUrls = data[1].audio_files;
       reciationsUrls.forEach((element) => {
@@ -57,10 +73,25 @@ function App() {
       setVerses(AyahsText);
       setRecitations(AyahsAudio);
     });
-  };
+    console.log(CurrentReciter, chapterID);
+  }, [CurrentReciter, chapterID]);
   return (
     <>
-      <Navbar changeID={setChapterID} chapters={chapters} chapID={chapterID} />
+      <h1>FINISH CHOOSING RECITERS</h1>
+      {openModal && (
+        <Modal
+          surahText={verses}
+          showModal={openModal}
+          setShowModal={setOpenModal}
+        />
+      )}
+      <Navbar
+        changeID={setChapterID}
+        chapters={chapters}
+        chapID={chapterID}
+        reciters={Reciters}
+        setReciter={setCurrentReciter}
+      />
       <section className="surahs">
         {chapters.map((chapter, index) => {
           return (
@@ -69,7 +100,8 @@ function App() {
               key={index}
               {...chapter}
               changeID={setChapterID}
-              loadSurah={loadSurah}
+              showModal={openModal}
+              setShowModal={setOpenModal}
             />
           );
         })}

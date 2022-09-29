@@ -2,8 +2,12 @@
     background-color: #1b1d20;
     height: 80px;
     display: flex;
-    justify-content: start;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 #close {
@@ -14,9 +18,38 @@
 }
 
 #bars {
+    display: none;
+    position: absolute;
+    left: 0;
     margin-left: 20px;
     font-size: 30px;
     cursor: pointer;
+}
+
+#reciters-options {
+    border-radius: 10px;
+    max-width: fit-content;
+    padding: 10px;
+    color: rgb(123, 123, 123);
+    font-family: 'Cairo', sans-serif;
+    font-weight: 500;
+    margin-left: 5px;
+    font-size: 1.5rem;
+    background-color: #1b1d20;
+    border: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+#reciters-options:hover {
+    background-color: #202326;
+    color: white;
+}
+
+#reciter-label {
+    /* margin-left: 150px; */
+    color: rgb(123, 123, 123);
+    font-size: 1.5rem;
 }
 
 .menu-bars {
@@ -26,6 +59,7 @@
 }
 
 .nav-menu {
+    z-index: 3;
     background-color: #1b1d20;
     width: 270px;
     height: 100vh;

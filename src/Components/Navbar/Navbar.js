@@ -5,7 +5,7 @@ import Switch from "@mui/material/Switch";
 import "./Navbar.css";
 import { FormControlLabel, FormGroup } from "@mui/material";
 
-function Navbar({ changeID, chapters, chapID }) {
+function Navbar({ changeID, chapters, chapID, reciters, setReciter }) {
   const [sideBar, setSideBar] = useState(false);
   const showSideBar = () => {
     setSideBar(!sideBar);
@@ -17,6 +17,22 @@ function Navbar({ changeID, chapters, chapID }) {
     <>
       <div className="navbar">
         <FaBars id="bars" onClick={showSideBar} />
+        <label id="reciter-label">
+          Reciter: 
+          <select
+            name=""
+            id="reciters-options"
+            onChange={(e) => setReciter(e.target.value)}
+          >
+            {reciters.map((reciter, index) => {
+              return (
+                <option value={reciter.id} key={index}>
+                  {reciter.name}
+                </option>
+              );
+            })}
+          </select>
+        </label>
       </div>
       <nav className={sideBar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items">
