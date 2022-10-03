@@ -9,7 +9,7 @@ const audioUrl = "https://verses.quran.com/";
 
 function App() {
   const [Reciters, setReciters] = useState([]);
-  const [CurrentReciter, setCurrentReciter] = useState(1);
+  const [CurrentReciter, setCurrentReciter] = useState(7);
   const [openModal, setOpenModal] = useState(false);
   const [AyahIndex, setAyahIndex] = useState(0);
   const [chapters, setChapters] = useState([]);
@@ -75,6 +75,7 @@ function App() {
     });
     console.log(CurrentReciter, chapterID);
   }, [CurrentReciter, chapterID]);
+  console.log(Reciters);
   return (
     <>
       <h1>FINISH CHOOSING RECITERS</h1>
