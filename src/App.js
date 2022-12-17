@@ -23,14 +23,6 @@ function App() {
         setChapters(data.chapters);
       });
   }, []);
-  // useEffect(() => {
-  //   fetch(`${baseUrl}/verses/by_chapter/1`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setVerses(data);
-  //     });
-  // }, []);
-
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
@@ -55,11 +47,11 @@ function App() {
     let AyahsText = [];
     setAyahIndex(0);
     Promise.all([
+      fetch(`${baseUrl}quran/verses/uthmani?chapter_number=${chapterID}`).then(
+        (response) => response.json()
+      ),
       fetch(
-        `${baseUrl}/quran/verses/uthmani?chapter_number=${chapterID}}`
-      ).then((response) => response.json()),
-      fetch(
-        `${baseUrl}/quran/recitations/${CurrentReciter}/?chapter_number=${chapterID}`
+        `${baseUrl}quran/recitations/${CurrentReciter}/?chapter_number=${chapterID}`
       ).then((response) => response.json()),
     ]).then((data) => {
       reciationsUrls = data[1].audio_files;
@@ -73,8 +65,8 @@ function App() {
       setVerses(AyahsText);
       setRecitations(AyahsAudio);
     });
-    console.log(CurrentReciter, chapterID);
   }, [CurrentReciter, chapterID]);
+  
   console.log(Reciters);
   return (
     <>

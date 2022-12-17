@@ -13,12 +13,19 @@ function Navbar({ changeID, chapters, chapID, reciters, setReciter }) {
   const handleChange = (e) => {
     changeID(e.target.value);
   };
+  reciters = reciters.filter(
+    (reciter) =>
+      reciter.id !== 12 &&
+      reciter.id !== 168 &&
+      reciter.id !== 6 &&
+      reciter.id !== 161
+  );
   return (
     <>
       <div className="navbar">
         <FaBars id="bars" onClick={showSideBar} />
         <label id="reciter-label">
-          Reciter: 
+          Reciter:
           <select
             name=""
             id="reciters-options"
