@@ -1,18 +1,21 @@
 import React from "react";
-import { Stack } from "@mui/material";
 import "./SurahText.css";
 const SurahText = ({ ayahText }) => {
   return (
-    <Stack className="ayah-stack">
+    <div className="text-white text-container">
       {ayahText.map((ayah, index) => {
         return (
-          <div key={index} id="ayah-div">
-            <span id="ayah-num">{index + 1}</span>
-            <p id="ayah">{ayah}</p>
+          <div key={index} className="flex mb-4 items-start justify-start">
+            <div className="bg-lightGray mt-3 h-8 px-1 py-1 flex items-center rounded-lg text-center text-md flex-none">
+              {index + 1}
+            </div>
+            <p className="px-5  leading-[4rem]">{ayah}</p>
           </div>
         );
       })}
-    </Stack>
+    </div>
   );
 };
+
+
 export default SurahText;

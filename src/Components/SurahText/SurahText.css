@@ -1,39 +1,4 @@
-.ayah-stack {
-    position: relative;
-    border-radius: 10px;
-    max-height: fit-content;
-}
 
-.ayah-stack>div {
-    padding: 5px;
-    text-align: center;
-}
-
-
-
-#ayah-div {
-    direction: rtl;
-    display: flex;
-    align-items: center;
-}
-
-#ayah {
-    padding: 10px;
-    line-height: 2;
-    max-width: 500px;
-    text-align: right;
-}
-
-#ayah-num {
-    display: inline-flex;
-    border-radius: 5px;
-    align-content: center;
-    max-width: 100%;
-    line-height: 1.2;
-    padding: 1px 3px;
-    outline: transparent solid 2px;
-    outline-offset: 2px;
-    min-height: 1.5rem;
-    float: right;
-    background-color: rgba(226, 232, 240, 0.16);
+.text-container {
+  direction: rtl;
 }

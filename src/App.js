@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Surah from "./Components/Surah/Surah";
 import "./App.css";
 import Modal from "./Components/Modal/Modal";
 import Player from "./Components/Player/Player";
 import Navbar from "./Components/Navbar/Navbar";
+import ChaptersList from "./Components/ChaptersList";
 const baseUrl = "https://api.quran.com/api/v4/";
 const audioUrl = "https://verses.quran.com/";
 
@@ -33,13 +33,13 @@ function App() {
         "30px";
     }
   }, [openModal]);
-  useEffect(() => {
-    fetch(`${baseUrl}resources/chapter_reciters?language=en`).then(
-      (response) => {
-        response.json().then((data) => setReciters(data.reciters));
-      }
-    );
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${baseUrl}resources/chapter_reciters?language=en`).then(
+  //     (response) => {
+  //       response.json().then((data) => setReciters(data.reciters));
+  //     }
+  //   );
+  // }, []);
   useEffect(() => {
     let reciationsUrls = [];
     let AyahsAudio = [];
@@ -66,11 +66,9 @@ function App() {
       setRecitations(AyahsAudio);
     });
   }, [CurrentReciter, chapterID]);
-  
-  console.log(Reciters);
+
   return (
-    <>
-      <h1>FINISH CHOOSING RECITERS</h1>
+    <div className=" bg-darkGray flex flex-col items-center">
       {openModal && (
         <Modal
           surahText={verses}
@@ -85,20 +83,13 @@ function App() {
         reciters={Reciters}
         setReciter={setCurrentReciter}
       />
-      <section className="surahs">
-        {chapters.map((chapter, index) => {
-          return (
-            <Surah
-              surahText={verses}
-              key={index}
-              {...chapter}
-              changeID={setChapterID}
-              showModal={openModal}
-              setShowModal={setOpenModal}
-            />
-          );
-        })}
-      </section>
+      <ChaptersList
+        chapters={chapters}
+        verses={verses}
+        setChapterID={setChapterID}
+        openModal={openModal}
+        setShowModal={setOpenModal}
+      />
       <footer>
         <Player
           reciationsURLS={recitations}
@@ -106,7 +97,7 @@ function App() {
           ayahText={[verses, setVerses]}
         />
       </footer>
-    </>
+    </div>
   );
 }
 export default App;
