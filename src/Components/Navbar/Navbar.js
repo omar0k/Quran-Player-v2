@@ -2,41 +2,41 @@ import React, { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import "./Navbar.css";
 
-function Navbar({ changeID, chapters, chapID, reciters, setReciter }) {
+function Navbar({
+  
+  reciters,
+  setReciter,
+  currentReciter,
+}) {
   const [sideBar, setSideBar] = useState(false);
   const showSideBar = () => {
     setSideBar(!sideBar);
   };
-  // const handleChange = (e) => {
-  //   changeID(e.target.value);
-  // };
-  reciters = reciters.filter(
-    (reciter) =>
-      reciter.id !== 12 &&
-      reciter.id !== 168 &&
-      reciter.id !== 6 &&
-      reciter.id !== 161
-  );
+  
+  reciters = reciters.filter((reciter) => ![11, 6, 12].includes(reciter.id));
   return (
-    <div className=" bg-darkestGray h-[80px] w-full mb-10 top-0 z-50 ">
+    <div className=" bg-darkestGray h-[80px] w-full mb-10 top-0 z-50 justify-center flex items-center">
       <FaBars id="bars" onClick={showSideBar} />
       {reciters.length > 0 && (
-        <label id="reciter-label">
-          Reciter:
+        <div className="text-xl  flex gap-3 rounded-md p-3 bg-lightGray">
+          <label htmlFor="reciters" className=" text-white">
+            Reciter:
+          </label>
           <select
-            name=""
-            id="reciters-options"
+            value={currentReciter}
+            className=" bg-lightGray  text-white "
             onChange={(e) => setReciter(e.target.value)}
           >
-            {reciters.map((reciter, index) => {
+            {reciters.map((reciter) => {
               return (
-                <option value={reciter.id} key={index}>
-                  {reciter.name}
+                <option className="" value={reciter.id} key={reciter.id}>
+                  {reciter.reciter_name}{" "}
+                  {reciter.style != null ? reciter.style : null}
                 </option>
               );
             })}
           </select>
-        </label>
+        </div>
       )}
     </div>
   );

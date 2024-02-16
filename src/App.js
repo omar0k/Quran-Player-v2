@@ -4,12 +4,13 @@ import Modal from "./Components/Modal/Modal";
 import Player from "./Components/Player/Player";
 import Navbar from "./Components/Navbar/Navbar";
 import ChaptersList from "./Components/ChaptersList";
+import axios from "axios";
 const baseUrl = "https://api.quran.com/api/v4/";
 const audioUrl = "https://verses.quran.com/";
 
 function App() {
-  const [Reciters, setReciters] = useState([]);
-  const [CurrentReciter, setCurrentReciter] = useState(7);
+  const [reciters, setReciters] = useState([]);
+  const [currentReciter, setCurrentReciter] = useState(7);
   const [openModal, setOpenModal] = useState(false);
   const [AyahIndex, setAyahIndex] = useState(0);
   const [chapters, setChapters] = useState([]);
@@ -33,13 +34,13 @@ function App() {
         "30px";
     }
   }, [openModal]);
-  // useEffect(() => {
-  //   fetch(`${baseUrl}resources/chapter_reciters?language=en`).then(
-  //     (response) => {
-  //       response.json().then((data) => setReciters(data.reciters));
-  //     }
-  //   );
-  // }, []);
+  useEffect(() => {
+    axios.get(`${baseUrl}resources/recitations`).then((response) => {
+      setReciters(response.data.recitations);
+    });
+  }, []);
+
+  console.log(reciters);
   useEffect(() => {
     let reciationsUrls = [];
     let AyahsAudio = [];
@@ -51,7 +52,7 @@ function App() {
         (response) => response.json()
       ),
       fetch(
-        `${baseUrl}quran/recitations/${CurrentReciter}/?chapter_number=${chapterID}`
+        `${baseUrl}quran/recitations/${currentReciter}/?chapter_number=${chapterID}`
       ).then((response) => response.json()),
     ]).then((data) => {
       reciationsUrls = data[1].audio_files;
@@ -65,10 +66,10 @@ function App() {
       setVerses(AyahsText);
       setRecitations(AyahsAudio);
     });
-  }, [CurrentReciter, chapterID]);
-
+  }, [currentReciter, chapterID]);
+  console.log(reciters);
   return (
-    <div className=" bg-darkGray flex flex-col items-center">
+    <div className=" bg-darkGray w-full flex flex-col items-center">
       {openModal && (
         <Modal
           surahText={verses}
@@ -77,10 +78,8 @@ function App() {
         />
       )}
       <Navbar
-        changeID={setChapterID}
-        chapters={chapters}
-        chapID={chapterID}
-        reciters={Reciters}
+        currentReciter={currentReciter}
+        reciters={reciters}
         setReciter={setCurrentReciter}
       />
       <ChaptersList
